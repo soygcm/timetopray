@@ -28,7 +28,7 @@ class UserIdentity extends CUserIdentity
      */
     public function authenticate() 
     {
-        $record=User::model()->findByAttributes(array('usuario'=>$this->username));
+        //$record=User::model()->findByAttributes(array('usuario'=>$this->username));
         $user = User::prepareUserForAuthorisation($this->username);
         
 	if($user === NULL) 
@@ -41,9 +41,10 @@ class UserIdentity extends CUserIdentity
         } 
         else 
         {         
-            $this->_id       = $user->id;
+            $this->_id       = $user->facebook_id;
             $this->username  = $user->usuario;
-            $this->setState('correo', $record->correo);
+            $this->setState('correo', $user->correo);
+            $this->setState('url', $user->facebook_url);
             $this->errorCode = self::ERROR_NONE;
 	}
         

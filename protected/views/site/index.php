@@ -4,7 +4,7 @@
 $this->pageTitle=Yii::app()->name;
 ?>
 
-<h1 id="nombre">Nombre del Usuario: <?php if (!Yii::app()->user->isGuest) {echo Yii::app()->user->name;} ?> </h1>
+<h1 id="nombre">Nombre del Usuario: <?php if (!Yii::app()->user->isGuest) {echo Yii::app()->user->name; echo ', '; echo CHtml::link('Facebook perfil', Yii::app()->user->url); } ?> </h1>
 
 
 
