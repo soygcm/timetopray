@@ -16,7 +16,7 @@ class FacebookController extends Controller
      * @param type $email string
      * @param type $session string
      */
-    public function actionLogin( $id = null , $name = null , $surname = null,$username = null, $email = null, $session = null )
+    public function actionLogin( $id = null , $link = null, $name = null , $surname = null,$username = null, $email = null, $session = null )
     {
         if( !Yii::app()->request->isAjaxRequest )
         {
@@ -42,10 +42,10 @@ class FacebookController extends Controller
                     $user->nombre           = $name;
                     $user->apellido         = $surname;
                     $user->usuario          = $username;
-
+                    $user->facebook_url     = $link;
                     $user->password         = $user->createRandomUsername();
-                    $user->facebook_cuenta   = 1;
-                    $user->save();
+                    $user->facebook_cuenta  = 1;
+                    $user->insert();
                 }
                 
                 $identity = new UserIdentity( $user->correo , $user->password );
@@ -55,7 +55,7 @@ class FacebookController extends Controller
                 if($identity->errorCode === UserIdentity::ERROR_NONE) 
                 {
                        Yii::app()->user->login($identity, NULL);
-                       echo json_encode( array( 'error'=>0, 'redirect'=> $this->createUrl('user/index') ) );
+                       echo json_encode( array( 'error'=>0, 'redirect'=> $this->createUrl('site/index') ) );
                 } 
                 else 
                 {
@@ -70,8 +70,4 @@ class FacebookController extends Controller
             }
         }
     }
-    
-    
-   
- 
 }
