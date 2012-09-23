@@ -25,6 +25,8 @@
 <div class="container" id="page">
 	    <?php //Yii::app()->facebook->ogTags['title'] = "My Page Title"; ?>
 
+
+
 	<div id="header">
 		<div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?></div>
 	</div><!-- header -->
@@ -33,7 +35,7 @@
 		<?php $this->widget('zii.widgets.CMenu',array(
 			'items'=>array(
 				array('label'=>'Home', 'url'=>array('/site/index')),
-				array('label'=>'Facebook', 'url'=>array('/facebook')),
+				array('label'=>'Notifications', 'url'=>array('/notifications')),
 				array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
 				array('label'=>'Contact', 'url'=>array('/site/contact')),
 				array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
@@ -47,7 +49,14 @@
 		)); ?><!-- breadcrumbs -->
 	<?php endif?>
 
-<?php $this->widget('application.widgets.facebook.Facebook',array('appId'=>'292898010730930')); ?>
+<?php //$this->widget('application.widgets.FacebookJS.FacebookJS',array('appId'=>'292898010730930')); ?>
+
+<?php
+	$this->widget('ext.yii-facebook-opengraph.plugins.LoginButton'); 
+	$this->widget('ext.yii-facebook-opengraph.javascript.LoginEvent');
+?>
+
+
 
 	<?php echo $content; ?>
 

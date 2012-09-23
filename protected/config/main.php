@@ -20,14 +20,14 @@ return array(
 
 	'modules'=>array(
 		// uncomment the following to enable the Gii tool
-		/*
+		
 		'gii'=>array(
 			'class'=>'system.gii.GiiModule',
-			'password'=>'Enter Your Password Here',
+			'password'=>'eddsees.empt8',
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
-			'ipFilters'=>array('127.0.0.1','::1'),
+			// 'ipFilters'=>array('127.0.0.1','::1'),
 		),
-		*/
+		
 	),
 
 	// application components
@@ -38,6 +38,26 @@ return array(
 		),
 		'session' => array(
 			'autoStart'=>true,
+		),
+		'facebook'=>array(
+			'class' => 'ext.yii-facebook-opengraph.SFacebook',
+			'appId'=>'292898010730930', // needed for JS SDK, Social Plugins and PHP SDK
+			'secret'=>'9d99741e688368fa6cfaa813b0d4eca0', // needed for the PHP SDK 
+			'locale'=>'es_ES', // override locale setting (defaults to en_US)
+			// 'jsSdk'=>true, // don't include JS SDK
+			// 'async'=>true, // load JS SDK asynchronously
+			// 'jsCallback'=>false, // declare if you are going to be inserting any JS callbacks to the async JS SDK loader
+			// 'status'=>true, // JS SDK - check login status
+			// 'cookie'=>true, // JS SDK - enable cookies to allow the server to access the session
+			// 'oauth'=>true,  // JS SDK - enable OAuth 2.0
+			// 'xfbml'=>true,  // JS SDK - parse XFBML / html5 Social Plugins
+			//'frictionlessRequests'=>true, // JS SDK - enable frictionless requests for request dialogs
+			// 'html5'=>true,  // use html5 Social Plugins instead of XFBML
+			'ogTags'=>array(  // set default OG tags
+				'title'=>'Time to pray',
+				'description'=>'Sitio web para orar con otros',
+				// 'image'=>'URL_TO_WEBSITE_LOGO',
+			),
 		),
 		// uncomment the following to enable URLs in path-format
 		/*

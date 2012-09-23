@@ -27,6 +27,30 @@ class Facebook extends CWidget{
         Yii::app()->clientScript->registerScriptFile($assetUrl.'/jquery.fancybox-1.3.4.pack.js'); 
         Yii::app()->clientScript->registerScriptFile($assetUrl.'/jquery.mousewheel-3.0.4.pack.js'); 
         */
+        /*$facebook = new Facebook(array(
+              'appId'  => '292898010730930',
+              'secret' => '9d99741e688368fa6cfaa813b0d4eca0'
+            ));
+
+        // See if there is a user from a cookie
+            $user = $facebook->getUser();
+
+            print_r($user);
+
+
+            if ($user) {
+              try {
+                // Proceed knowing you have a logged in user who's authenticated.
+                $user_profile = $facebook->api('/me');
+                echo "Name: " . $user_profile['name'];
+              } catch (FacebookApiException $e) {
+                echo 'FacebookApiException';
+                echo '<pre>'.htmlspecialchars(print_r($e, true)).'</pre>';
+                $user = null;
+              }
+
+            }*/
+
         $this->facebookLoginUrl     = Yii::app()->createAbsoluteUrl($this->facebookLoginUrl);
         $assetUrl = Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('application.widgets.facebook.assets'));
         $this->facebookScriptFile   = $assetUrl.$this->facebookScriptFile;

@@ -103,60 +103,6 @@ class SiteController extends Controller
 		// display the login form
 		$this->render('login',array('model'=>$model));
 	}
-/*
-	public function actionLogin( $id = null , $name = null , $surname = null,$username = null, $email = null, $session = null )
-    {
-        if( !Yii::app()->request->isAjaxRequest )
-        {
-            echo json_encode(array('error'=>'this is not ajax request'));
-            die();
-        } 
-        else 
-        {
-            if( empty($email) )
-            {
-                echo json_encode(array('error'=>'email is not provided'));
-                die();
-            }
-            if( $session == Yii::app()->session->sessionID )
-            {
-            
-                $user = User::prepareUserForAuthorisation( $email );
-                
-                if( $user === null ) 
-                {
-                    $user                   = new User();
-                    $user->e_mail           = $email;    
-                    $user->first_name       = $name;
-                    $user->last_name        = $surname;
-                    $user->username         = $username;
-                    $user->password         = $user->createRandomUsername();
-                    $user->facebook_account   = 1;
-                    $user->insert();
-                }
-                
-                $identity = new UserIdentity( $user->e_mail , $user->password );
-                $identity->authenticate();
-
-  
-                if($identity->errorCode === UserIdentity::ERROR_NONE) 
-                {
-                       Yii::app()->user->login($identity, NULL);
-                       echo json_encode( array( 'error'=>0, 'redirect'=> $this->createUrl('user/index') ) );
-                } 
-                else 
-                {
-                       echo json_encode(array('error'=>'user not logged in'));
-                       die();
-                }
-            }
-            else
-            {
-                echo json_encode(array('error'=>'session id is not the same'));
-                die();
-            }
-        }
-    }*/
 
 	/**
 	 * Logs out the current user and redirect to homepage.
@@ -166,4 +112,17 @@ class SiteController extends Controller
 		Yii::app()->user->logout();
 		$this->redirect(Yii::app()->homeUrl);
 	}
+
+	protected function afterRender($view, &$output)
+	{
+	    parent::afterRender($view,$output);
+	    //Yii::app()->facebook->addJsCallback($js); // use this if you are registering any $js code you want to run asyc
+	    Yii::app()->facebook->initJs($output); // this initializes the Facebook JS SDK on all pages
+	    Yii::app()->facebook->renderOGMetaTags(); // this renders the OG tags
+
+	    
+
+	    return true;
+	}
+	
 }
