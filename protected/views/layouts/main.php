@@ -49,11 +49,10 @@
 		)); ?><!-- breadcrumbs -->
 	<?php endif?>
 
-<?php //$this->widget('application.widgets.FacebookJS.FacebookJS',array('appId'=>'292898010730930')); ?>
+<?php $this->widget('application.widgets.FacebookJS.FacebookJS'); ?>
 
 <?php
-	$this->widget('ext.yii-facebook-opengraph.plugins.LoginButton'); 
-	$this->widget('ext.yii-facebook-opengraph.javascript.LoginEvent');
+	// $this->widget('ext.yii-facebook-opengraph.plugins.LoginButton'); 
 ?>
 
 

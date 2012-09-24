@@ -3,25 +3,30 @@
  * class Facebook
  * @author Igor Ivanović 
  */
-class Facebook extends CWidget{
+class FacebookJS extends CWidget{
 
-    public $appId;
+    public $appId = '99999';
     public $status = true;
     public $cookie = true;
     public $xfbml  = true;
     public $oauth  = true;
-    public $userSession;
+    public $userSession = '5555';
     public $facebookButtonTitle = "Facebook Connect";
     public $fbLoginButtonId     = "fb_login_button_id";
     public $logoutButtonId      = "your_logout_button_id";
     public $facebookLoginUrl    = "facebook/login";
     public $facebookPermissions = "email,user_likes";
     public $facebookScriptFile  = "/facebook.js";
+    public $script              = "/login.js";
+    public $plugin              = "login-button";
+    public $userId              = '';
+    public $accessToken         = '';
     /**
     * Run Widget
     */
     public function run()
     {
+        // echo "Hello";
         // Fancybox stuff.
         /*$assetUrl = Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('ext.fancybox.assets'));
         Yii::app()->clientScript->registerScriptFile($assetUrl.'/jquery.fancybox-1.3.4.pack.js'); 
@@ -52,7 +57,7 @@ class Facebook extends CWidget{
             }*/
 
         $this->facebookLoginUrl     = Yii::app()->createAbsoluteUrl($this->facebookLoginUrl);
-        $assetUrl = Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('application.widgets.facebook.assets'));
+        $assetUrl = Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('application.widgets.FacebookJS.assets'));
         $this->facebookScriptFile   = $assetUrl.$this->facebookScriptFile;
         $this->userSession          = Yii::app()->session->sessionID;
         $this->renderJavascript();
@@ -63,6 +68,11 @@ class Facebook extends CWidget{
     */
     private function renderJavascript()
     {
+        if(Yii::app()->user->id){
+            $this->userId = Yii::app()->user->id;
+            $this->accessToken = Yii::app()->facebook->getAccessToken();
+        }
+
         $script=<<<EOL
 
             var fbLoginButtonId = "{$this->fbLoginButtonId}";
@@ -75,6 +85,8 @@ class Facebook extends CWidget{
             var cookie =  {$this->cookie};
             var xfbml  = {$this->xfbml};
             var oauth  = {$this->oauth};
+            var userId = {$this->userId};
+            var accessToken = '{$this->accessToken}';
 EOL;
 
         Yii::app()->clientScript->registerScript('facebook-connect',$script,  CClientScript::POS_END );

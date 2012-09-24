@@ -6,7 +6,8 @@ $this->pageTitle=Yii::app()->name;
 
 <h1 id="nombre">Nombre del Usuario: <?php if (!Yii::app()->user->isGuest) {echo Yii::app()->user->name; echo ', '; echo CHtml::link('Facebook perfil', Yii::app()->user->url); } ?> </h1>
 
-
+<?php $imageUrl = Yii::app()->facebook->getProfilePicture($size) // gets the Facebook picture URL of the current user ?>
+<?php echo CHtml::image($imageUrl, 'ProfilePicture'); ?>
 
 <h1>Welcome to <i><?php echo CHtml::encode(Yii::app()->name); ?></i></h1>
 

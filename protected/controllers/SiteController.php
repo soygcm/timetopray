@@ -35,6 +35,7 @@ class SiteController extends Controller
 	{
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
+		echo "Hello";
 		$this->render('index');
 	}
 
@@ -120,7 +121,7 @@ class SiteController extends Controller
 	    Yii::app()->facebook->initJs($output); // this initializes the Facebook JS SDK on all pages
 	    Yii::app()->facebook->renderOGMetaTags(); // this renders the OG tags
 
-	    
+
 
 	    return true;
 	}

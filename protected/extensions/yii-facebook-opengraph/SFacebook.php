@@ -275,43 +275,6 @@ class SFacebook extends CApplicationComponent
         }
     }
 
-    public function initJs(&$output)
-    {
-        if (!$this->appId) {
-            throw new CException('Facebook Application ID not specified.');
-        }
-        // initialize the Facebook JS
-        if ($this->jsSdk) {
-            $script = '//connect.facebook.net/'.$this->getLocale().'/all.js';
-            $init = $this->registerSDKScript('init', array(
-                    'appId' => $this->appId, // application ID
-                    'status' => $this->status, // check login status
-                    'cookie' => $this->cookie, // enable cookies to allow the server to access the session
-                    'xfbml' => $this->xfbml, // parse XFBML
-                    'oauth' => $this->oauth, // enable OAuth 2.0
-                    'frictionlessRequests' => $this->frictionlessRequests, // Enable frictionless requests on requests dialog
-                    // TODO follow up on this bug: http://developers.facebook.com/bugs/258868920826496
-                    // IE won't login with this channelUrl line uncommented
-                    //'channelUrl' => $this->getChannelUrl(), // Channel File
-                )
-            );
-            if ($this->async) {
-                $init = "window.fbAsyncInit = function(){{$init}};
-                (function(d){
-                 var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
-                 js = d.createElement('script'); js.id = id; js.async = true;
-                 js.src = '{$script}';
-                 d.getElementsByTagName('head')[0].appendChild(js);
-                }(document));";
-            }
-            else {
-                Yii::app()->clientScript->registerScriptFile($script, CClientScript::POS_END);
-            }
-            Yii::app()->getClientScript()->registerScript('fb-script', $init, CClientScript::POS_END);
-            $this->insertFbRoot($output);
-            $this->registerAsyncCallback();
-        }
-    }
 
     /**
      * This function adds the fb-root div tag to the bottom of the <body> tag
