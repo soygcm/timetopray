@@ -5,26 +5,106 @@ body
 	color: #555;
 	font: normal 10pt Arial,Helvetica,sans-serif;
 	background: #EFEFEF;
+	background-image: url('../images/fondo.jpg');
+}
+
+header{
+	height: 210px;
+	background: url('../images/header.png') repeat-x;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	float: left;
+}
+header.fix{
+	position: fixed;
+	z-index: 0;
+	top: -160px;
+}
+header #logo{
+	padding: 10px 20px;
+	font-size: 200%;
+	float: left;
+
+}
+
+footer
+{
+	padding: 10px;
+	margin: 10px 20px;
+	font-size: 0.8em;
+	text-align: center;
+	/*border-top: 1px solid #C9E0ED;*/
+}
+
+#user{
+	height: 188px;
+	background: url(../images/user.png) no-repeat;	
+	width: 658px;
+	padding: 30px 55px 0 55px;
+	position: absolute;
+	top: 164px;
+}
+#user.fix{
+	position: fixed;
+	z-index: 20000;
+	top: 4px;
+}
+#user #fb_login_button{
+	/*width: 635px;*/
+	margin: 0 auto;
+	/*height: 130px;*/
+	-webkit-border-radius: 25px;
+	-moz-border-radius: 25px;
+	border-radius: 25px;
+	font-size: 4em;
+	background-color: #3B5998;
+	color: white;
+	padding: 30px;
+	cursor: pointer;
+}
+#user #fb_login_button:hover{
+	background-color: #4B67A1;
+}
+#user .picture{
+	width: 100px;
+	height: 100px;
+	background: url(../images/frame.png) no-repeat;
+	padding: 15px;
+	padding: 15px 19px 29px 23px;
+	float: left;
+	margin-right: 10px;
+}
+#user .picture img{
+	background-position: center center;
+	background-color: black;
+}
+#user .name{
+	color:#383025;
+	font-size: 2.5em;
+	font-weight: bold;
+}
+
+#site{
+	background: url(../images/site.png) repeat-y center;
 }
 
 #page
 {
-	margin-top: 5px;
-	margin-bottom: 5px;
-	background: white;
-	border: 1px solid #C9E0ED;
-}
+	
 
-#header
-{
-	margin: 0;
-	padding: 0;
-	border-top: 3px solid #C9E0ED;
+}
+#page.fix{
+	margin-top: 25px;
 }
 
 #content
 {
-    padding: 20px;
+    padding: 55px;
+    padding-top: 370px;
+}
+#content.fix{
+	padding-top: 345px;
 }
 
 #sidebar
@@ -32,24 +112,10 @@ body
 	padding: 20px 20px 20px 0;
 }
 
-#footer
-{
-	padding: 10px;
-	margin: 10px 20px;
-	font-size: 0.8em;
-	text-align: center;
-	border-top: 1px solid #C9E0ED;
-}
-
-#logo
-{
-	padding: 10px 20px;
-	font-size: 200%;
-}
-
 #mainmenu
 {
-	background:white url(bg.gif) repeat-x left top;
+	/*background:white url(bg.gif) repeat-x left top;*/
+	margin-top: 40px;
 }
 
 #mainmenu ul
