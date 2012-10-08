@@ -12,7 +12,7 @@ class FacebookJS extends CWidget{
     public $oauth  = true;
     public $userSession = '5555';
     public $facebookButtonTitle = "Facebook Connect";
-    public $fbLoginButtonId     = "fb_login_button_id";
+    public $fbLoginButtonId     = "fb_login_button";
     public $logoutButtonId      = "your_logout_button_id";
     public $facebookLoginUrl    = "facebook/login";
     public $facebookPermissions = "email,user_likes";
@@ -61,20 +61,14 @@ class FacebookJS extends CWidget{
         $this->facebookScriptFile   = $assetUrl.$this->facebookScriptFile;
         $this->userSession          = Yii::app()->session->sessionID;
         $this->renderJavascript();
-        $this->render('login');
+        // $this->render('login');
     }
     /**
     * Render necessary facebook  javascript
     */
     private function renderJavascript()
     {
-        if(Yii::app()->user->id){
-            $this->userId = Yii::app()->user->id;
-            $this->accessToken = Yii::app()->facebook->getAccessToken();
-        }
-
         $script=<<<EOL
-
             var fbLoginButtonId = "{$this->fbLoginButtonId}";
             var facebookLoginUrl = '{$this->facebookLoginUrl}';
             var userSession = "{$this->userSession}";
@@ -85,9 +79,20 @@ class FacebookJS extends CWidget{
             var cookie =  {$this->cookie};
             var xfbml  = {$this->xfbml};
             var oauth  = {$this->oauth};
+EOL;
+        if(Yii::app()->user->id){
+            $this->userId = Yii::app()->user->id;
+            $this->accessToken = Yii::app()->facebook->getAccessToken();
+
+            $script.=<<<EOL
+
             var userId = {$this->userId};
             var accessToken = '{$this->accessToken}';
 EOL;
+
+        }
+
+
 
         Yii::app()->clientScript->registerScript('facebook-connect',$script,  CClientScript::POS_END );
         Yii::app()->clientScript->registerScriptFile($this->facebookScriptFile, CClientScript::POS_END);

@@ -21,53 +21,62 @@
 </head>
 
 <body>
+<div id="site">
+	<header>
+		<div id="logo">
+			<h1><?php echo CHtml::image('images/logo.png', Yii::app()->name); ?></h1>
+		</div>
+
+		<div id="mainmenu">
+			<?php $this->widget('zii.widgets.CMenu',array(
+				'items'=>array(
+					array('label'=>'Home', 'url'=>array('/site/index')),
+					array('label'=>'Notifications', 'url'=>array('/notifications')),
+					array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
+					array('label'=>'Contact', 'url'=>array('/site/contact')),
+					array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
+					array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
+				),
+			)); ?>
+		</div><!-- mainmenu -->
+	</header>
 
 <div class="container" id="page">
-	    <?php //Yii::app()->facebook->ogTags['title'] = "My Page Title"; ?>
+	<section id="user">
+		<div id="profile">
+			<?php $this->widget('application.widgets.FacebookJS.FacebookJS'); ?>
 
+			<?php if(!Yii::app()->user->isGuest): ?>
+				
+				<div class="picture">
+					<?php $imageUrl = Yii::app()->facebook->getProfilePicture('normal');?>
+					<img src="images/picture.png" alt="foto de perfil" style="background-image:url(<?php echo $imageUrl; ?>);">
+					<?php //echo CHtml::image($imageUrl, 'ProfilePicture'); ?>
+				</div>
 
+				<h2 class="name"><?php echo Yii::app()->user->name; ?> <?php echo Yii::app()->user->apellido;?> </h1>
 
-	<div id="header">
-		<div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?></div>
-	</div><!-- header -->
+				<h3 class="carrera"></h3>
+				<h3 class="iglesia"></h3>
+				
+				<section class="menu_usuario">
+					
+				</section>
 
-	<div id="mainmenu">
-		<?php $this->widget('zii.widgets.CMenu',array(
-			'items'=>array(
-				array('label'=>'Home', 'url'=>array('/site/index')),
-				array('label'=>'Notifications', 'url'=>array('/notifications')),
-				array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
-				array('label'=>'Contact', 'url'=>array('/site/contact')),
-				array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
-				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
-			),
-		)); ?>
-	</div><!-- mainmenu -->
-	<?php if(isset($this->breadcrumbs)):?>
-		<?php $this->widget('zii.widgets.CBreadcrumbs', array(
-			'links'=>$this->breadcrumbs,
-		)); ?><!-- breadcrumbs -->
-	<?php endif?>
+			<?php else: ?>
+    			<div id="fb_login_button">Entra usando <?php echo CHtml::image('images/facebook.png', 'Facebok'); ?></div>
+			<?php endif ?>
 
-<?php $this->widget('application.widgets.FacebookJS.FacebookJS'); ?>
-
-<?php
-	// $this->widget('ext.yii-facebook-opengraph.plugins.LoginButton'); 
-?>
-
-
-
+		</div>
+	</section>
 	<?php echo $content; ?>
-
-	<div class="clear"></div>
-
-	<div id="footer">
+	<footer>
 		Copyright &copy; <?php echo date('Y'); ?> by My Company.<br/>
 		All Rights Reserved.<br/>
 		<?php echo Yii::powered(); ?>
-	</div><!-- footer -->
+	</footer><!-- footer -->
 
-</div><!-- page -->
+</div><!-- page --></div>
 
 </body>
 </html>

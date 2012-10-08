@@ -22,7 +22,7 @@ class NotificationsController extends Controller
 			echo "App Request sent?", $result;
 		}*/
 		
-		echo "Error?";
+		// echo "Error?";
 		$this->render('index');
 
 		

@@ -42,7 +42,8 @@ class UserIdentity extends CUserIdentity
         else 
         {         
             $this->_id       = $user->facebook_id;
-            $this->username  = $user->usuario;
+            $this->username  = $user->nombre;
+            $this->setState('apellido', $user->apellido);
             $this->setState('correo', $user->correo);
             $this->setState('url', $user->facebook_url);
             $this->errorCode = self::ERROR_NONE;

@@ -1,54 +1,50 @@
 // var access_token = '';
 jQuery(document).ready(function() {
-    
-    $('#'+fbLoginButtonId).click(function(){
-        console.log('click facebook login button');
-        var access_token;
+    // console.log(fbLoginButtonId);
+        $('#'+fbLoginButtonId).click(function(){
+            console.log('click facebook login button');
+            var access_token;
+            FB.login(function(response) {
+                if(response.authResponse) {
+                    access_token =   FB.getAuthResponse()['accessToken'];
+                    console.log('Access Token = '+ access_token);
+                    FB.api('/me', function(user) {
 
-        FB.login(function(response) {
-            if(response.authResponse) {
-                access_token =   FB.getAuthResponse()['accessToken'];
-                console.log('Access Token = '+ access_token);
-                FB.api('/me', function(user) {
-
-                    $.ajax({
-                        type : 'get',
-                        url  : facebookLoginUrl,
-                        data : ( { 
-                            name     :   user.first_name, 
-                            surname  :   user.last_name,
-                            username :   user.username,
-                            id       :   user.id,
-                            link     :   user.link,
-                            email    :   user.email,
-                            session  :   userSession,
-                            access_token:access_token
-                        } ),
-                        dataType : 'json',
-                        success : function( data ){
-                            //console.log(data);
-                            if( data.error == 0){
-                                window.location.href = data.redirect;
-                                console.log(data.redirect);
-                            }else{
-                                console.log( data.error );
-                                // console.log(data.message);
-                                FB.logout();
+                        $.ajax({
+                            type : 'get',
+                            url  : facebookLoginUrl,
+                            data : ( { 
+                                name     :   user.first_name, 
+                                surname  :   user.last_name,
+                                username :   user.username,
+                                id       :   user.id,
+                                link     :   user.link,
+                                email    :   user.email,
+                                session  :   userSession,
+                                access_token:access_token
+                            } ),
+                            dataType : 'json',
+                            success : function( data ){
+                                //console.log(data);
+                                if( data.error == 0){
+                                    window.location.href = data.redirect;
+                                    console.log(data.redirect);
+                                }else{
+                                    console.log( data.error );
+                                    // console.log(data.message);
+                                    FB.logout();
+                                }
+                            },
+                            error : function(jqXHR, textStatus, errorThrown){
+                                console.log(errorThrown);
                             }
-                        },
-                        error : function(jqXHR, textStatus, errorThrown){
-                            console.log(errorThrown);
-                        }
-                    });
-                });    
-            }else {
-                console.log('User cancelled login or did not fully authorize.');
-            }
-        }, {scope: facebookPermissions}); 
-
-
-    })
-
+                        });
+                    });    
+                }else {
+                    console.log('User cancelled login or did not fully authorize.');
+                }
+            }, {scope: facebookPermissions}); 
+        })
     $('form').submit(function(){
         console.log('form submited');
         user_id_dest = $('#userid').val();
@@ -91,7 +87,16 @@ jQuery(document).ready(function() {
         return false;
     });
 
-
+    $(window).scroll(function(event) {
+        console.log('scrolling '+$('body').scrollTop());
+        if($('body').scrollTop() >= 160){
+            console.log('scroll en 155');
+            $('header,#page,#content,#user').addClass('fix');
+        }else if($('body').scrollTop() < 160){
+            $('header,#page,#content,#user').removeClass('fix');
+        }
+    });
+    
 });
 
 
