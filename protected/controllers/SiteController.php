@@ -20,13 +20,6 @@ class SiteController extends Controller
 			),
 		);
 	}
-	/*protected function afterRender($view, &$output) {
-      parent::afterRender($view,$output);
-      //Yii::app()->facebook->addJsCallback($js); // use this if you are registering any $js code you want to run asyc
-      Yii::app()->facebook->initJs($output); // this initializes the Facebook JS SDK on all pages
-      Yii::app()->facebook->renderOGMetaTags(); // this renders the OG tags
-      return true;
-    }*/
 	/**
 	 * This is the default 'index' action that is invoked
 	 * when an action is not explicitly requested by users.
@@ -39,6 +32,42 @@ class SiteController extends Controller
 		$this->render('index');
 	}
 
+	/**
+     * Displays the register page
+     */
+    public function actionRegister()
+    {
+            $model=new RegisterForm;
+            $newUser = new User;
+            
+            // if it is ajax validation request
+            if(isset($_POST['ajax']) && $_POST['ajax']==='login-form')
+            {
+                    echo CActiveForm::validate($model);
+                    Yii::app()->end();
+            }
+
+            // collect user input data
+            if(isset($_POST['RegisterForm']))
+            {
+                    $model->attributes=$_POST['RegisterForm'];
+                    $newUser->username = $model->username;
+                    $newUser->password = $model->password;
+                    $newUser->email = $model->email;
+                    $newUser->joined = date('Y-m-d');
+                            
+                    if($newUser->save()) {
+                            $identity=new UserIdentity($newUser->username,$model->password);
+                            $identity->authenticate();
+                            Yii::app()->user->login($identity,0);
+                            //redirect the user to page he/she came from
+                            $this->redirect(Yii::app()->user->returnUrl);
+                    }
+                            
+            }
+            // display the register form
+            $this->render('register',array('model'=>$model));
+    }
 	/**
 	 * This is the action to handle external exceptions.
 	 */
@@ -54,58 +83,6 @@ class SiteController extends Controller
 	}
 
 	/**
-	 * Displays the contact page
-	 */
-	public function actionContact()
-	{
-		$model=new ContactForm;
-		if(isset($_POST['ContactForm']))
-		{
-			$model->attributes=$_POST['ContactForm'];
-			if($model->validate())
-			{
-				$name='=?UTF-8?B?'.base64_encode($model->name).'?=';
-				$subject='=?UTF-8?B?'.base64_encode($model->subject).'?=';
-				$headers="From: $name <{$model->email}>\r\n".
-					"Reply-To: {$model->email}\r\n".
-					"MIME-Version: 1.0\r\n".
-					"Content-type: text/plain; charset=UTF-8";
-
-				mail(Yii::app()->params['adminEmail'],$subject,$model->body,$headers);
-				Yii::app()->user->setFlash('contact','Thank you for contacting us. We will respond to you as soon as possible.');
-				$this->refresh();
-			}
-		}
-		$this->render('contact',array('model'=>$model));
-	}
-
-	/**
-	 * Displays the login page
-	 */
-	public function actionLogin()
-	{
-		$model=new LoginForm;
-
-		// if it is ajax validation request
-		if(isset($_POST['ajax']) && $_POST['ajax']==='login-form')
-		{
-			echo CActiveForm::validate($model);
-			Yii::app()->end();
-		}
-
-		// collect user input data
-		if(isset($_POST['LoginForm']))
-		{
-			$model->attributes=$_POST['LoginForm'];
-			// validate user input and redirect to the previous page if valid
-			if($model->validate() && $model->login())
-				$this->redirect(Yii::app()->user->returnUrl);
-		}
-		// display the login form
-		$this->render('login',array('model'=>$model));
-	}
-
-	/**
 	 * Logs out the current user and redirect to homepage.
 	 */
 	public function actionLogout()
@@ -113,7 +90,6 @@ class SiteController extends Controller
 		Yii::app()->user->logout();
 		$this->redirect(Yii::app()->homeUrl);
 	}
-
 	protected function afterRender($view, &$output)
 	{
 	    parent::afterRender($view,$output);

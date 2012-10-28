@@ -27,7 +27,7 @@ jQuery(document).ready(function() {
                             success : function( data ){
                                 //console.log(data);
                                 if( data.error == 0){
-                                    //window.location.href = data.redirect;
+                                    window.location.href = data.redirect;
                                     console.log(data.redirect);
                                 }else{
                                     console.log( data.error );

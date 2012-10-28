@@ -15,6 +15,13 @@ class User extends CActiveRecord
         return 'usuario';
     }
     
+    public function relations()
+    {
+        return array(
+            'usuario_datos'=>array(self::HAS_MANY, 'Dato', 'usuario_id'),
+        );
+    }
+
      /**
      * Return current object in static 
      * @param type $className this

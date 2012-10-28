@@ -64,7 +64,6 @@ class FacebookController extends Controller
                 }else{
 
                     $user = User::prepareUserForAuthorisation( $email );
-                
                     if( $user === null ) {
 
                         $user                   = new User();
@@ -77,8 +76,8 @@ class FacebookController extends Controller
                         $user->password         = $user->createRandomUsername();
                         $user->facebook_cuenta  = 1;
                         $user->insert();
-
-                        echo json_encode( array( 'error'=>0, 'redirect'=> $this->createUrl('register/index',  array('user' => $user->id ) ) );
+                        echo json_encode( array( 'error'=>0, 'redirect'=> $this->createUrl('site/register',  array('user' => $user->id ) )) );
+                        
                         die();
                     }
                     
