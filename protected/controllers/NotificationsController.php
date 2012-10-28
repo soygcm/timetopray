@@ -2,26 +2,7 @@
 class NotificationsController extends Controller
 {
 	public function actionIndex()
-	{
-
-		/*if(isset($_POST['userid']))
-		{
-			$user_id_dest = $_POST['userid'];
-			$app_access_token = Yii::app()->facebook->getAccessToken();
-			// //file_get_contents($token_url);
-
-			$user_id = Yii::app()->user->id;
-
-			$apprequest_url ="https://graph.facebook.com/".$user_id_dest.
-			"/notifications?".
-     		"access_token=".$app_access_token."& ".
-     		"href=http://localhost:8888/yii/bazz/locales/13& ".
-     		"template={".$user_id."} Tiene en comun un orario contigo para orar!";
-
-			$result = file_get_contents($apprequest_url);
-			echo "App Request sent?", $result;
-		}*/
-		
+	{	
 		// echo "Error?";
 		$this->render('index');
 

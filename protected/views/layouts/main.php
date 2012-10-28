@@ -16,7 +16,7 @@
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css" />
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css" />
-
+	<?php $this->widget('application.widgets.JavaScript.JavaScript'); ?>
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>
 
@@ -44,7 +44,7 @@
 <div class="container" id="page">
 	<section id="user">
 		<div id="profile">
-			<?php $this->widget('application.widgets.FacebookJS.FacebookJS'); ?>
+			
 
 			<?php if(!Yii::app()->user->isGuest): ?>
 				
